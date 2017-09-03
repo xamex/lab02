@@ -1,0 +1,324 @@
+\hypertarget{round_8h}{}\section{Referência ao ficheiro include/round.h}
+\label{round_8h}\index{include/round.\+h@{include/round.\+h}}
+
+
+Arquivo de cabeçalho contendo a definição das funções que controlam as ações de uma rodada.  
+
+
+Este grafo mostra quais são os ficheiros que incluem directamente ou indirectamente este ficheiro\+:
+% FIG 0
+\subsection*{Funções}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{round_8h_a4c0568b6b6b213c2334e9798b4781335}{scoreboard} (\hyperlink{classPlayer}{Player} a, \hyperlink{classPlayer}{Player} b, \hyperlink{classPlayer}{Player} c, int nplayers)
+\begin{DoxyCompactList}\small\item\em Função que imprime o placar do jogadores. \end{DoxyCompactList}\item 
+void \hyperlink{round_8h_ac86d540d9c881429f882563a8624ac7c}{show\+\_\+dices} (\hyperlink{classPlayer}{Player} a, \hyperlink{classPlayer}{Player} b, \hyperlink{classPlayer}{Player} c, int nplayers)
+\begin{DoxyCompactList}\small\item\em Função que imprime os dados dos jogadores. \end{DoxyCompactList}\item 
+void \hyperlink{round_8h_a7e5e6625d4c926b20eea3ff1057c4c0f}{check} (\hyperlink{classPlayer}{Player} \&a, \hyperlink{classPlayer}{Player} \&b, \hyperlink{classPlayer}{Player} \&c, int n)
+\begin{DoxyCompactList}\small\item\em Função que checa o vencedor ou vencedores no caso dos 3 jogadores decidirem pausar a rodada. \end{DoxyCompactList}\item 
+void \hyperlink{round_8h_a071cfa6f63bf2f632072f1ba951879d6}{checkf2} (\hyperlink{classPlayer}{Player} \&x, \hyperlink{classPlayer}{Player} \&y, int n)
+\begin{DoxyCompactList}\small\item\em Função que checa o vencedor ou vencedores no caso de 2 jogadores decidirem pausar a rodada. \end{DoxyCompactList}\item 
+void \hyperlink{round_8h_a46ddb23602c560d9529cda08e70d7f78}{winner} (\hyperlink{classPlayer}{Player} \&a, \hyperlink{classPlayer}{Player} \&b, \hyperlink{classPlayer}{Player} \&c, int n, int \&cont)
+\begin{DoxyCompactList}\small\item\em Função que faz o tratamendo do vencedor(es) da rodada. \end{DoxyCompactList}\item 
+void \hyperlink{round_8h_ad900738801f7a9232aa077b68dd02b14}{choise} (\hyperlink{classPlayer}{Player} \&x, int \&nplayers)
+\begin{DoxyCompactList}\small\item\em Função que checa se um jogador especifico quer parar de jogar na rodada. \end{DoxyCompactList}\item 
+void \hyperlink{round_8h_a4d4dd324c981e0a427f0c4ed4375967d}{give\+\_\+up} (\hyperlink{classPlayer}{Player} \&a, \hyperlink{classPlayer}{Player} \&b, \hyperlink{classPlayer}{Player} \&c, int \&nplayers, int lost)
+\begin{DoxyCompactList}\small\item\em Função que se algum jogador quer parar de jogar na rodada atual. \end{DoxyCompactList}\item 
+int \hyperlink{round_8h_a237fa2197900ee4aa6c406fde8b8f961}{overloaded} (\hyperlink{classPlayer}{Player} \&x, \hyperlink{classPlayer}{Player} \&y, \hyperlink{classPlayer}{Player} \&z, int \&nplayers, int n, int \&lost)
+\begin{DoxyCompactList}\small\item\em Função que desativa jogadores que passaram do valor da aposta. \end{DoxyCompactList}\item 
+int \hyperlink{round_8h_abd3cd3513ba387651fd38df3e735d160}{bingo} (\hyperlink{classPlayer}{Player} \&a, \hyperlink{classPlayer}{Player} \&b, \hyperlink{classPlayer}{Player} \&c, int n, int \&cont)
+\begin{DoxyCompactList}\small\item\em Função que checa se algum jogador atingiu o valor da aposta. \end{DoxyCompactList}\item 
+void \hyperlink{round_8h_a92467275e801c1f241653d8196b54e1c}{print\+\_\+victories} (\hyperlink{classPlayer}{Player} a, \hyperlink{classPlayer}{Player} b, \hyperlink{classPlayer}{Player} c)
+\begin{DoxyCompactList}\small\item\em Função que imprime a quantidade de vitorias de cada jogador. \end{DoxyCompactList}\item 
+void \hyperlink{round_8h_af8576139c83806f57fe2e0ab63bbb5c3}{print\+\_\+menu} (\hyperlink{classPlayer}{Player} a, \hyperlink{classPlayer}{Player} b, \hyperlink{classPlayer}{Player} c)
+\begin{DoxyCompactList}\small\item\em Função que imprime o menu. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Descrição detalhada}
+Arquivo de cabeçalho contendo a definição das funções que controlam as ações de uma rodada. 
+
+\begin{DoxyAuthor}{Autor}
+Gabriel Barbosa (\href{mailto:gbsbarbosa.gb@gmail.com}{\tt gbsbarbosa.\+gb@gmail.\+com}) 
+\end{DoxyAuthor}
+\begin{DoxySince}{Desde}
+05/05/2017 
+\end{DoxySince}
+\begin{DoxyDate}{Data}
+07/05/2017 
+\end{DoxyDate}
+
+
+\subsection{Documentação das funções}
+\index{round.\+h@{round.\+h}!bingo@{bingo}}
+\index{bingo@{bingo}!round.\+h@{round.\+h}}
+\subsubsection[{\texorpdfstring{bingo(\+Player \&a, Player \&b, Player \&c, int n, int \&cont)}{bingo(Player &a, Player &b, Player &c, int n, int &cont)}}]{\setlength{\rightskip}{0pt plus 5cm}int bingo (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} \&}]{a, }
+\item[{{\bf Player} \&}]{b, }
+\item[{{\bf Player} \&}]{c, }
+\item[{int}]{n, }
+\item[{int \&}]{cont}
+\end{DoxyParamCaption}
+)}\hypertarget{round_8h_abd3cd3513ba387651fd38df3e735d160}{}\label{round_8h_abd3cd3513ba387651fd38df3e735d160}
+
+
+Função que checa se algum jogador atingiu o valor da aposta. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em a} & A jogador 1 \\
+\hline
+{\em b} & B jogador 2 \\
+\hline
+{\em c} & C jogador 3 \\
+\hline
+{\em n} & N valor da aposta da rodada \\
+\hline
+{\em cont} & C\+O\+NT numero de jogadores que atingiram o valor da aposta na rodada \\
+\hline
+\end{DoxyParams}
+\index{round.\+h@{round.\+h}!check@{check}}
+\index{check@{check}!round.\+h@{round.\+h}}
+\subsubsection[{\texorpdfstring{check(\+Player \&a, Player \&b, Player \&c, int n)}{check(Player &a, Player &b, Player &c, int n)}}]{\setlength{\rightskip}{0pt plus 5cm}void check (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} \&}]{a, }
+\item[{{\bf Player} \&}]{b, }
+\item[{{\bf Player} \&}]{c, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{round_8h_a7e5e6625d4c926b20eea3ff1057c4c0f}{}\label{round_8h_a7e5e6625d4c926b20eea3ff1057c4c0f}
+
+
+Função que checa o vencedor ou vencedores no caso dos 3 jogadores decidirem pausar a rodada. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em a} & A jogador 1 \\
+\hline
+{\em b} & B jogador 2 \\
+\hline
+{\em c} & C jogador 3 \\
+\hline
+{\em n} & N valor da aposta da rodada \\
+\hline
+\end{DoxyParams}
+\index{round.\+h@{round.\+h}!checkf2@{checkf2}}
+\index{checkf2@{checkf2}!round.\+h@{round.\+h}}
+\subsubsection[{\texorpdfstring{checkf2(\+Player \&x, Player \&y, int n)}{checkf2(Player &x, Player &y, int n)}}]{\setlength{\rightskip}{0pt plus 5cm}void checkf2 (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} \&}]{x, }
+\item[{{\bf Player} \&}]{y, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{round_8h_a071cfa6f63bf2f632072f1ba951879d6}{}\label{round_8h_a071cfa6f63bf2f632072f1ba951879d6}
+
+
+Função que checa o vencedor ou vencedores no caso de 2 jogadores decidirem pausar a rodada. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em x} & X jogador x \\
+\hline
+{\em y} & Y jogador y \\
+\hline
+{\em n} & N valor da aposta da rodada \\
+\hline
+\end{DoxyParams}
+\index{round.\+h@{round.\+h}!choise@{choise}}
+\index{choise@{choise}!round.\+h@{round.\+h}}
+\subsubsection[{\texorpdfstring{choise(\+Player \&x, int \&nplayers)}{choise(Player &x, int &nplayers)}}]{\setlength{\rightskip}{0pt plus 5cm}void choise (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} \&}]{x, }
+\item[{int \&}]{nplayers}
+\end{DoxyParamCaption}
+)}\hypertarget{round_8h_ad900738801f7a9232aa077b68dd02b14}{}\label{round_8h_ad900738801f7a9232aa077b68dd02b14}
+
+
+Função que checa se um jogador especifico quer parar de jogar na rodada. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em x} & X jogador x= \\
+\hline
+{\em nplayers} & N\+P\+L\+A\+Y\+E\+RS numero de jogadores ativos e nao pausados \\
+\hline
+\end{DoxyParams}
+\index{round.\+h@{round.\+h}!give\+\_\+up@{give\+\_\+up}}
+\index{give\+\_\+up@{give\+\_\+up}!round.\+h@{round.\+h}}
+\subsubsection[{\texorpdfstring{give\+\_\+up(\+Player \&a, Player \&b, Player \&c, int \&nplayers, int lost)}{give_up(Player &a, Player &b, Player &c, int &nplayers, int lost)}}]{\setlength{\rightskip}{0pt plus 5cm}void give\+\_\+up (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} \&}]{a, }
+\item[{{\bf Player} \&}]{b, }
+\item[{{\bf Player} \&}]{c, }
+\item[{int \&}]{nplayers, }
+\item[{int}]{lost}
+\end{DoxyParamCaption}
+)}\hypertarget{round_8h_a4d4dd324c981e0a427f0c4ed4375967d}{}\label{round_8h_a4d4dd324c981e0a427f0c4ed4375967d}
+
+
+Função que se algum jogador quer parar de jogar na rodada atual. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em a} & A jogador 1 \\
+\hline
+{\em b} & B jogador 2 \\
+\hline
+{\em c} & C jogador 3 \\
+\hline
+{\em nplayers} & N\+P\+L\+A\+Y\+E\+RS numero de jogadores ativos e nao pausados \\
+\hline
+{\em lost} & L\+O\+ST numero de jogadores que perderam \\
+\hline
+\end{DoxyParams}
+\index{round.\+h@{round.\+h}!overloaded@{overloaded}}
+\index{overloaded@{overloaded}!round.\+h@{round.\+h}}
+\subsubsection[{\texorpdfstring{overloaded(\+Player \&x, Player \&y, Player \&z, int \&nplayers, int n, int \&lost)}{overloaded(Player &x, Player &y, Player &z, int &nplayers, int n, int &lost)}}]{\setlength{\rightskip}{0pt plus 5cm}int overloaded (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} \&}]{x, }
+\item[{{\bf Player} \&}]{y, }
+\item[{{\bf Player} \&}]{z, }
+\item[{int \&}]{nplayers, }
+\item[{int}]{n, }
+\item[{int \&}]{lost}
+\end{DoxyParamCaption}
+)}\hypertarget{round_8h_a237fa2197900ee4aa6c406fde8b8f961}{}\label{round_8h_a237fa2197900ee4aa6c406fde8b8f961}
+
+
+Função que desativa jogadores que passaram do valor da aposta. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em x} & X jogador 1 \\
+\hline
+{\em y} & Y jogador 2 \\
+\hline
+{\em z} & Z jogador 3 \\
+\hline
+{\em nplayers} & N\+P\+L\+A\+Y\+E\+RS numero de jogadores ativos e nao pausados \\
+\hline
+{\em lost} & L\+O\+ST numero de jogadores que perderam \\
+\hline
+\end{DoxyParams}
+\index{round.\+h@{round.\+h}!print\+\_\+menu@{print\+\_\+menu}}
+\index{print\+\_\+menu@{print\+\_\+menu}!round.\+h@{round.\+h}}
+\subsubsection[{\texorpdfstring{print\+\_\+menu(\+Player a, Player b, Player c)}{print_menu(Player a, Player b, Player c)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+menu (
+\begin{DoxyParamCaption}
+\item[{{\bf Player}}]{a, }
+\item[{{\bf Player}}]{b, }
+\item[{{\bf Player}}]{c}
+\end{DoxyParamCaption}
+)}\hypertarget{round_8h_af8576139c83806f57fe2e0ab63bbb5c3}{}\label{round_8h_af8576139c83806f57fe2e0ab63bbb5c3}
+
+
+Função que imprime o menu. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em a} & A jogador 1 \\
+\hline
+{\em b} & B jogador 2 \\
+\hline
+{\em c} & C jogador 3 \\
+\hline
+\end{DoxyParams}
+\index{round.\+h@{round.\+h}!print\+\_\+victories@{print\+\_\+victories}}
+\index{print\+\_\+victories@{print\+\_\+victories}!round.\+h@{round.\+h}}
+\subsubsection[{\texorpdfstring{print\+\_\+victories(\+Player a, Player b, Player c)}{print_victories(Player a, Player b, Player c)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+victories (
+\begin{DoxyParamCaption}
+\item[{{\bf Player}}]{a, }
+\item[{{\bf Player}}]{b, }
+\item[{{\bf Player}}]{c}
+\end{DoxyParamCaption}
+)}\hypertarget{round_8h_a92467275e801c1f241653d8196b54e1c}{}\label{round_8h_a92467275e801c1f241653d8196b54e1c}
+
+
+Função que imprime a quantidade de vitorias de cada jogador. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em a} & A jogador 1 \\
+\hline
+{\em b} & B jogador 2 \\
+\hline
+{\em c} & C jogador 3 \\
+\hline
+\end{DoxyParams}
+\index{round.\+h@{round.\+h}!scoreboard@{scoreboard}}
+\index{scoreboard@{scoreboard}!round.\+h@{round.\+h}}
+\subsubsection[{\texorpdfstring{scoreboard(\+Player a, Player b, Player c, int nplayers)}{scoreboard(Player a, Player b, Player c, int nplayers)}}]{\setlength{\rightskip}{0pt plus 5cm}void scoreboard (
+\begin{DoxyParamCaption}
+\item[{{\bf Player}}]{a, }
+\item[{{\bf Player}}]{b, }
+\item[{{\bf Player}}]{c, }
+\item[{int}]{nplayers}
+\end{DoxyParamCaption}
+)}\hypertarget{round_8h_a4c0568b6b6b213c2334e9798b4781335}{}\label{round_8h_a4c0568b6b6b213c2334e9798b4781335}
+
+
+Função que imprime o placar do jogadores. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em a} & A jogador 1 \\
+\hline
+{\em b} & B jogador 2 \\
+\hline
+{\em c} & C jogador 3 \\
+\hline
+{\em nplayers} & N\+P\+L\+A\+Y\+E\+RS numero de jogadores ativos e nao pausados \\
+\hline
+\end{DoxyParams}
+\index{round.\+h@{round.\+h}!show\+\_\+dices@{show\+\_\+dices}}
+\index{show\+\_\+dices@{show\+\_\+dices}!round.\+h@{round.\+h}}
+\subsubsection[{\texorpdfstring{show\+\_\+dices(\+Player a, Player b, Player c, int nplayers)}{show_dices(Player a, Player b, Player c, int nplayers)}}]{\setlength{\rightskip}{0pt plus 5cm}void show\+\_\+dices (
+\begin{DoxyParamCaption}
+\item[{{\bf Player}}]{a, }
+\item[{{\bf Player}}]{b, }
+\item[{{\bf Player}}]{c, }
+\item[{int}]{nplayers}
+\end{DoxyParamCaption}
+)}\hypertarget{round_8h_ac86d540d9c881429f882563a8624ac7c}{}\label{round_8h_ac86d540d9c881429f882563a8624ac7c}
+
+
+Função que imprime os dados dos jogadores. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em a} & A jogador 1 \\
+\hline
+{\em b} & B jogador 2 \\
+\hline
+{\em c} & C jogador 3 \\
+\hline
+{\em nplayers} & N\+P\+L\+A\+Y\+E\+RS numero de jogadores ativos e nao pausados \\
+\hline
+\end{DoxyParams}
+\index{round.\+h@{round.\+h}!winner@{winner}}
+\index{winner@{winner}!round.\+h@{round.\+h}}
+\subsubsection[{\texorpdfstring{winner(\+Player \&a, Player \&b, Player \&c, int n, int \&cont)}{winner(Player &a, Player &b, Player &c, int n, int &cont)}}]{\setlength{\rightskip}{0pt plus 5cm}void winner (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} \&}]{a, }
+\item[{{\bf Player} \&}]{b, }
+\item[{{\bf Player} \&}]{c, }
+\item[{int}]{n, }
+\item[{int \&}]{cont}
+\end{DoxyParamCaption}
+)}\hypertarget{round_8h_a46ddb23602c560d9529cda08e70d7f78}{}\label{round_8h_a46ddb23602c560d9529cda08e70d7f78}
+
+
+Função que faz o tratamendo do vencedor(es) da rodada. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em a} & A jogador 1 \\
+\hline
+{\em b} & B jogador 2 \\
+\hline
+{\em c} & C jogador 3 \\
+\hline
+{\em cont} & Cont numero de jogadores que obteram resultado igual ao da aposta da rodada \\
+\hline
+{\em n} & N valor da aposta da rodada \\
+\hline
+\end{DoxyParams}
