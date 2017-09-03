@@ -140,36 +140,38 @@ void checkf2(vector<Player*> &vjog, int aposta, int pausados)
 	while((*it)->get_status() != 2 && it < vjog.end()) it++;
 
 	wnr = it;
+	it++;
 
-
-	for(it = wnr+1; it < vjog.end(); ++it)
+	for(; it < vjog.end(); ++it)
 	{
-		if((*it)->get_score() - aposta < (*wnr)->get_score() - aposta)
-		{
-			wnr = it;
-			draw.clear(); // limpa vetor de empates  
+		if((*it)->get_status() == 2 && (*wnr)->get_status() == 2)
+		{	
+			if((*it)->get_score() > (*wnr)->get_score())
+			{
+				wnr = it;
+				draw.clear(); // limpa vetor de empates  
 
-		}else if ((*it)->get_score() - aposta == (*wnr)->get_score() - aposta)
-		{
-			draw.push_back((*wnr));
+			}else if ((*it)->get_score() == (*wnr)->get_score())
+			{
+				draw.push_back((*wnr));
 			
+			}
 		}
 	}
-/*
-	else
+
+	draw.push_back((*wnr));
+
+	for(wnr = draw.begin(); wnr < draw.end(); wnr++)
 	{
-		x.set_status(3);
-		y.set_status(3);
-		cout << "\nEmpate entre jogador " << x.get_id() << " e jogador " << y.get_id() << endl;
+		(*wnr)->set_status(3);
 	}
-	*/
+
+	vjog = draw;
 }
 
 /** 
  * @brief	Função que faz o tratamendo do vencedor(es) da rodada
- * @param	a A jogador 1
- * @param	b B jogador 2
- * @param	c C jogador 3
+
  * @param   quantv Cont numero de jogadores que obteram resultado igual
  *			ao da aposta da rodada
  * @param	aposta APOSTA valor da aposta da rodada
@@ -185,29 +187,27 @@ void winner(vector<Player*> &vjog, int aposta, int &quantv)
 		pause = 0;
 		cout << "\nVencedor(es) da rodada:\n";
 		for (it = vjog.begin(); it < vjog.end(); ++it)
-		{
-			if((*it)->get_status() == 2) pause++;
-
 			if((*it)->get_status() == 3){(*it)->set_victories(1); cout << "jogador " << (*it)->get_id() << endl;}
-		}
 
 		cout << endl;
 
 	}else
 	{
+		for (it = vjog.begin(); it < vjog.end(); ++it)
+			if((*it)->get_status() == 2) pause++;
 
 		if(pause == 1)
 		{
 			for (it = vjog.begin(); it < vjog.end(); ++it)
-				if((*it)->get_status() == 2){(*it)->set_victories(1); cout << "\nO vencedor da rodada foi o jogador " << (*it)->get_id() << endl;}	
+				if((*it)->get_status() == 2){(*it)->set_victories(1); cout << "\nO vencedor da rodada foi o jogador: " << (*it)->get_id() << endl;}	
 		}
 
 		if(pause > 1)
 		{
 			checkf2(vjog, aposta, pause);
+			quantv++;
+			goto vencedores;
 		}
-
-		goto vencedores;
 	}
 
 }
@@ -353,13 +353,35 @@ void print_victories(vector<Player*> &vjog){
 }
 */
 
+
+void novo_jogo(vector<Player*> &vjog)
+{
+	cout << "Informe o número de jogadores entre 1 e 4: ";
+			int njogadores;
+
+			do{
+				invalida(njogadores);
+			}while(njogadores > 4 || njogadores < 1);
+
+			for (int i = 0; i < njogadores; ++i)
+				vjog.push_back(new Player());
+
+			cout << "\nInforme o nome de cada jogador\n";
+			string nome;
+			cin.ignore();
+			for(vector<Player*>::iterator it = vjog.begin(); it < vjog.end(); ++it)
+			{
+				getline(cin, nome, '\n');
+				(*it)->set_id(nome);
+			}
+}
 /** 
  * @brief	Função que imprime o menu
  * @param	a A jogador 1
  * @param	b B jogador 2
  * @param	c C jogador 3
  */
-void print_menu(vector<Player*> &vjog)
+int print_menu(vector<Player*> &vjog)
 {
 	inicio:
 	cout << "\n\n----------------Menu----------------\n\n";
@@ -373,36 +395,46 @@ void print_menu(vector<Player*> &vjog)
 
 	do{
 		invalida(menu);
-		if(menu < 1 && menu > 4){limpa_tela(); print_menu(vjog);}
-	}while(menu < 1 && menu > 4);
+		if(menu < 1 || menu > 4){limpa_tela(); print_menu(vjog);}
+	}while(menu < 1 || menu > 4);
 
-	if(menu==4)
-	{
-		limpa_tela();
-		cout << "Saindo...";
-		exit(0);
+	switch(menu){
+		case 1:
+			limpa_tela();
+			novo_jogo(vjog);
+	 		limpa_tela();
+	 		break;
+
+		case 2:
+		
+			limpa_tela();
+			cout << "REGRAS:\n";
+			cout << "A cada rodada é jogado 2 dados para cada jogador.\n";
+			cout << "A soma dos valores dos dados é acumulado.\n\n";
+
+			cout << "OBJETIVO:\n" << "O objetivo é ficar o mais próximo e abaixo do valor N\n" "a ser estabelecido no início de cada rodada.";
+			cout << " Ao obter\num valor agregado superior a N, o jogador é considerado\nexcluído da rodada.\n\nA cada vez de jogar, o jogador pode optar por jogar os\ndados ou parar (e não jogar mais até a rodada acabar).\n\n";
+			cout << "Uma rodada é finalizada quando:\n\n(1) resta\napenas um jogador, uma vez que os outros foram excluídos\n\n(2) quando não há mais jogadores a jogar, ou seja,\ntodos os jogadores “ativos” decidiram parar\n\n";
+			cout << "(3) quando um dos jogadores atinge exatamente o valor N.\n\nVence a rodada:\nO jogador que permanecer na rodada (ou seja, não for excluído)\ne obtiver o número de pontos agregados mais próximo de N\n\n";
+			print_menu(vjog);
+			break;
+
+		case 3:
+			limpa_tela();
+			//print_victories(vjog);
+			goto inicio;
+			break;
+
+		case 4:
+			limpa_tela();
+			cout << "Saindo...";
+			exit(0);
+			break;
+
+		default:
+			cout << "\nINFORME UM VALOR VÁLIDO\n";
+			break;
 	}
 
-	if(menu==1)
- 		limpa_tela();
-
-	if(menu==3){
-		limpa_tela();
-		//print_victories(vjog);
-		goto inicio;
-	}
-
-	if(menu==2)
-	{
-		limpa_tela();
-		cout << "REGRAS:\n";
-		cout << "A cada rodada é jogado 2 dados para cada jogador.\n";
-		cout << "A soma dos valores dos dados é acumulado.\n\n";
-
-		cout << "OBJETIVO:\n" << "O objetivo é ficar o mais próximo e abaixo do valor N\n" "a ser estabelecido no início de cada rodada.";
-		cout << " Ao obter\num valor agregado superior a N, o jogador é considerado\nexcluído da rodada.\n\nA cada vez de jogar, o jogador pode optar por jogar os\ndados ou parar (e não jogar mais até a rodada acabar).\n\n";
-		cout << "Uma rodada é finalizada quando:\n\n(1) resta\napenas um jogador, uma vez que os outros foram excluídos\n\n(2) quando não há mais jogadores a jogar, ou seja,\ntodos os jogadores “ativos” decidiram parar\n\n";
-		cout << "(3) quando um dos jogadores atinge exatamente o valor N.\n\nVence a rodada:\nO jogador que permanecer na rodada (ou seja, não for excluído)\ne obtiver o número de pontos agregados mais próximo de N\n\n";
-		print_menu(vjog);
-	}
+	return menu;
 }

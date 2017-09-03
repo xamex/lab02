@@ -39,6 +39,7 @@ doxy:
 clean: 
 	$(RM) $(BIN_DIR)/*
 	$(RM) $(OBJ_DIR)/*	
+	$(RM) $(DOC_DIR)/*	
 
 go:
 	$(BIN_DIR)/player

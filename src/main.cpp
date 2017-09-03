@@ -21,101 +21,90 @@ using namespace util;
 
 int Player::n = 0;
 
+
 int main(){
 
-	util::limpa_tela();
+	int lost;
+	int cont;
+	int nplayers;
+	int pare;
 	
-	std::vector<Player*> vjogadores;
+	vector<Player*> vjogadores;
 
-	cout << "Informe o número de jogadores entre 1 e 4: ";
-	int njogadores;
-	do{
-		invalida(njogadores);
-	}while(njogadores > 4 || njogadores < 1);
+	limpa_tela();
 
-	for (int i = 0; i < njogadores; ++i)
+	while(print_menu(vjogadores) != 4)
 	{
-		vjogadores.push_back(new Player());
-	}
-
-	inicio:
-
-	print_menu(vjogadores);
-	cout << "Informe o valor da aposta para a essa partida: ";
-	int n;
-	cin >> n;
-	Player::set_n(n);
-
-	int nplayers = njogadores;
-	int lost = 0;
-	int cont = 0;
-
-	while(nplayers >= 1){
-		util::limpa_tela();
-		srand(time(NULL));
 		
-		for(vector<Player*>::iterator it = vjogadores.begin(); it < vjogadores.end(); ++it)
-		{
-			(*it)->dice_rand();
-		}
+		cout << "Informe o valor da aposta para essa partida: ";
+		int n;
+		invalida(n);
+		Player::set_n(n);
 
-
-		/**
-		* @brief	mostra os dados dos jogadors
-		*/
-		show_dices(vjogadores, nplayers);
-
-		/**
-		* @brief	mostra o resultado dos jogadors
-		*/
-		scoreboard(vjogadores, nplayers);
-
-		if(bingo(vjogadores, n, cont) == 1){
-			winner(vjogadores, n, cont);
-			goto inicio;
-		}
-
-		/**
-		* @brief	checa se algum jodador ultrapassou a aposta da rodada
-		*/
-		overloaded(vjogadores, nplayers, n, lost);
-
-		/**
-		* @brief	checa se algum jodador quer parar de jogar na rodada
-		*/
-		give_up(vjogadores, nplayers, lost);
-
-
-		/**
-		* @brief	se dois jogadores perderem ganha oque está ativo
-		*/
-		if(lost == njogadores - 1)
-		{
+		nplayers = (int)vjogadores.size();
+		lost = 0;
+		cont = 0;
+		pare = 0;
+		while(nplayers >= 1 && pare == 0){
+			util::limpa_tela();
+			srand(time(NULL));
+			
 			for(vector<Player*>::iterator it = vjogadores.begin(); it < vjogadores.end(); ++it)
+				(*it)->dice_rand();
+
+			/**
+			* @brief	mostra os dados dos jogadors
+			*/
+			show_dices(vjogadores, nplayers);
+
+			/**
+			* @brief	mostra o resultado dos jogadors
+			*/
+			scoreboard(vjogadores, nplayers);
+
+			/**
+			* @brief	checa se algum jogador atingiu o valor da aposta
+			*/
+			if(bingo(vjogadores, n, cont) == 1)
 			{
-				if((*it)->get_status()==1)
-				{
-					(*it)->set_victories(1); 
-					cout << "\nO Vencedor da rodada foi o jogador " << (*it)->get_id() << endl;
+				pare = 1;
+
+			}else{
+				/**
+				* @brief	checa se algum jodador ultrapassou a aposta da rodada
+				*/
+				overloaded(vjogadores, nplayers, n, lost);
+
+				/**
+				* @brief	checa se algum jodador quer parar de jogar na rodada
+				*/
+				give_up(vjogadores, nplayers, lost);
+
+				
+				/**
+				* @brief	se todos - 1 jogadores perderem ganha o que está ativo
+				*/
+				if(lost == (int)vjogadores.size() - 1)
+				{	pare = 1;
+					for(vector<Player*>::iterator it = vjogadores.begin(); it < vjogadores.end(); ++it)
+					{
+						if((*it)->get_status() == 1)
+						{
+							(*it)->set_victories(1);
+							(*it)->set_status(3); 
+						}
+					}
 				}
 			}
-			goto fim;
 		}
+
+		if(lost == (int)vjogadores.size()){cout << "\nNão houve vencedores nesta rodada\n";}
+
+		/**
+		* @brief	checa quem ganhou
+		*/	
+		winner(vjogadores, n, cont);
 	}
-
-	fim:
-
-	if(lost == njogadores){cout << "\nNão houve vencedores nesta rodada\n";}
-
-	/**
-	* @brief	checa quem ganhou
-	*/	
-	winner(vjogadores, n, cont);
-
-	/**
-	* @brief	vai para label inicio
-	*/
-	goto inicio;
 
 	return 0;
 }

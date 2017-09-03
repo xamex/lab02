@@ -26,6 +26,7 @@ Player::Player(){
 	dice[1] = 0;
 	status = 1;
 	victories = 0;
+	id = "desconhecido";
 }
 
 
@@ -61,7 +62,7 @@ void Player::set_score(int c){
  * @brief	Função que retorna a identidade do jogador
  * @return 	identidade do jogador
  */
-int Player::get_id(){
+string Player::get_id(){
 	return id;
 }
 
@@ -70,7 +71,7 @@ int Player::get_id(){
  * @brief	Função que atribui um valor ao placar do jogador
  * @param	s S identidade do jogador
  */
-void Player::set_id(int s){
+void Player::set_id(string s){
 	id = s;
 }
 

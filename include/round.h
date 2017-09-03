@@ -10,6 +10,8 @@
 
 #ifndef ROUND_H
 #define ROUND_H
+#include <string>
+using std::string;
 
 
 /** 
@@ -130,6 +132,6 @@ int bingo(vector<Player*> &v, int n, int &cont);
  * @param	b B jogador 2
  * @param	c C jogador 3
  */
-void print_menu(vector<Player*> &vjog);
+int print_menu(vector<Player*> &vjog);
 
 #endif

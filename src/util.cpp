@@ -28,7 +28,7 @@
     * @param    num int a ser testado
     */
     void invalida(int &num){
-        while (!(cin >> num)) {
+        while (!(cin >> num) || num < 1) {
         cin.clear(); 
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cout << "Entrada inválida. Por favor, digite um valor válido.\n";

@@ -9,11 +9,14 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <string>
+using std::string;
+
 class Player
 {
 	private:
 		int dice[2]; // dados
-		int id;		// identidade do jogador
+		string id;		// identidade do jogador
 		int score; // placar
 
 
@@ -79,13 +82,13 @@ class Player
 	 * @brief	Função que retorna a identidade do jogador
 	 * @return 	identidade do jogador
 	 */
-		int get_id();
+		string get_id();
 
 	/** 
 	 * @brief	Função que atribui um valor ao placar do jogador
 	 * @param	s S identidade do jogador
 	 */
-		void set_id(int s);
+		void set_id(string s);
 
 
 	/** 
