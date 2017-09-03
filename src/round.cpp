@@ -32,32 +32,29 @@ using namespace util;
  * 			nao pausados
  */
 
-void scoreboard(Player a, Player b, Player c, int nplayers){
-	if(nplayers > 0){
+void scoreboard(vector<Player*> &vjog, int nplayers)
+{
+	if(nplayers > 0)
+	{
 		cout << "\n-----------------------\n";
 		cout << "\nPLACAR\n";
-		if(a.get_status() != 0){
-		cout << "Jogador " << a.get_id() << ": " << a.get_score();
-			if(a.get_status()==2){cout <<" (pausado)";}
-		cout << endl;
-		}else(cout << "Jogador " << a.get_id() << ": Eliminado\n");
+		for(vector<Player*>::iterator it = vjog.begin(); it < vjog.end(); ++it)
+		{
+			if((*it)->get_status() != 0)
+			{
+				cout << "Jogador " << (*it)->get_id() << ": " << (*it)->get_score();
+				if((*it)->get_status()==2){cout <<" (pausado)";}
+				cout << endl;
 
-		if(b.get_status() != 0){
-		cout << "Jogador " << b.get_id() << ": " << b.get_score();
-			if(b.get_status()==2){cout <<" (pausado)";}
-		cout << endl;
-		}else(cout << "Jogador " << b.get_id() << ": Eliminado\n");
-
-		if(c.get_status() != 0){
-		cout << "Jogador " << c.get_id() << ": " << c.get_score();
-			if(c.get_status()==2){cout <<" (pausado)";}
-		cout << endl;
-		}else(cout << "Jogador " << c.get_id() << ": Eliminado\n");
-
-		cout << "\nAposta da rodada: " << Player::get_n() << endl;
-		cout << "\n-----------------------\n";
-		cout << endl;
+			}else{
+				(cout << "Jogador " << (*it)->get_id() << ": Eliminado\n");
+ 			}
+		}
 	}
+
+	cout << "\nAposta da rodada: " << Player::get_n() << endl;
+	cout << "\n-----------------------\n";
+	cout << endl;
 }
 
 
@@ -69,22 +66,19 @@ void scoreboard(Player a, Player b, Player c, int nplayers){
  * @param	nplayers NPLAYERS numero de jogadores ativos e
  * 			nao pausados
  */
-void show_dices(Player a, Player b, Player c, int nplayers){
-	if(nplayers > 0){
-		if(a.get_status() == 1){
-		cout << "\nJogador " << a.get_id() << ": ";
-		a.get_dice();
+void show_dices(vector<Player*> &vjog, int nplayers)
+{
+	if(nplayers > 0)
+	{
+		for(vector<Player*>::iterator it = vjog.begin(); it < vjog.end(); ++it)
+		{
+			if((*it)->get_status() == 1)
+			{
+				cout << "\nJogador " << (*it)->get_id() << ": ";
+				(*it)->get_dice();
+			}
 		}
-
-		if(b.get_status() == 1){
-		cout << "\nJogador " << b.get_id() << ": ";
-		b.get_dice();
-		}
-
-		if(c.get_status() == 1){
-		cout << "\nJogador " << c.get_id() << ": ";
-		c.get_dice();
-		}
+		
 	}
 }
 
@@ -97,6 +91,7 @@ void show_dices(Player a, Player b, Player c, int nplayers){
  * @param	c C jogador 3
  * @param	n N valor da aposta da rodada
  */
+/*
 void check(Player &a, Player &b, Player &c, int n){
 
 	if(a.get_score() == b.get_score() && a.get_score() != c.get_score()){
@@ -127,6 +122,7 @@ void check(Player &a, Player &b, Player &c, int n){
 		}
 	}
 }
+*/
 
 /** 
  * @brief	Função que checa o vencedor ou vencedores no caso
@@ -140,23 +136,22 @@ void checkf2(vector<Player*> &vjog, int aposta, int pausados)
 	vector<Player*>::iterator it, wnr;
 	vector<Player*> draw;
 
-	it = vjog.begin()
-	while(it->get_status() != 2 && it < vjog.end()) it++;
+	it = vjog.begin();
+	while((*it)->get_status() != 2 && it < vjog.end()) it++;
 
 	wnr = it;
 
 
 	for(it = wnr+1; it < vjog.end(); ++it)
 	{
-		if(it->get_score() - aposta < wnr->get_score() - aposta)
+		if((*it)->get_score() - aposta < (*wnr)->get_score() - aposta)
 		{
 			wnr = it;
-			draw.clear() // limpa vetor de empates
-			cdraw = 0;  
+			draw.clear(); // limpa vetor de empates  
 
-		}else if (it->get_score() - aposta == wnr->get_score() - aposta)
+		}else if ((*it)->get_score() - aposta == (*wnr)->get_score() - aposta)
 		{
-			draw.push_back(wnr);
+			draw.push_back((*wnr));
 			
 		}
 	}
@@ -191,9 +186,9 @@ void winner(vector<Player*> &vjog, int aposta, int &quantv)
 		cout << "\nVencedor(es) da rodada:\n";
 		for (it = vjog.begin(); it < vjog.end(); ++it)
 		{
-			if(it->get_status() == 2) pause++;
+			if((*it)->get_status() == 2) pause++;
 
-			if(it->get_status() == 3){it->set_victories(1); cout << "jogador " << it->get_id() << endl;}
+			if((*it)->get_status() == 3){(*it)->set_victories(1); cout << "jogador " << (*it)->get_id() << endl;}
 		}
 
 		cout << endl;
@@ -204,16 +199,13 @@ void winner(vector<Player*> &vjog, int aposta, int &quantv)
 		if(pause == 1)
 		{
 			for (it = vjog.begin(); it < vjog.end(); ++it)
-				if(it->get_status() == 2){it->set_victories(1); cout << "\nO vencedor da rodada foi o jogador " << it->get_id() << endl;}	
+				if((*it)->get_status() == 2){(*it)->set_victories(1); cout << "\nO vencedor da rodada foi o jogador " << (*it)->get_id() << endl;}	
 		}
 
-		if(pause > 1 && pause < 4)
+		if(pause > 1)
 		{
 			checkf2(vjog, aposta, pause);
 		}
-
-		if(pause == 4)
-			check(a, b, c, aposta);
 
 		goto vencedores;
 	}
@@ -228,26 +220,27 @@ void winner(vector<Player*> &vjog, int aposta, int &quantv)
  * @param	nplayers NPLAYERS numero de jogadores ativos e
  * 			nao pausados
  */
-void choise(vector<Player*> &v, int &nplayers){
-	int choise;
+void choice(vector<Player*> &v, int &nplayers)
+{
+	int choice;
 
 	vector<Player*>::iterator it;
 	for (it = v.begin(); it < v.end(); ++it)
 	{
-		if(nplayers > 0 && it->get_status()==1)
+		if(nplayers > 0 && (*it)->get_status()==1)
 		{
-			cout << "Jogador " << it->get_id() << " deseja parar?\n";
+			cout << "Jogador " << (*it)->get_id() << " deseja parar?\n";
 			cout << "1 - Sim\n" << "2 - Não\n\n";
 
 			do{
 				invalida(choice);
-			}while(choise != 1 && choise != 2);
+			}while(choice != 1 && choice != 2);
 
-			if(choise == 1)
+			if(choice == 1)
 			{
-				cout << "\njogador " << it->get_id() << " parou\n\n";
+				cout << "\njogador " << (*it)->get_id() << " parou\n\n";
 				nplayers--;
-				it->set_status(2);
+				(*it)->set_status(2);
 			}
 		}
 	}  
@@ -263,7 +256,8 @@ void choise(vector<Player*> &v, int &nplayers){
  * 			nao pausados
  * @param	lost LOST numero de jogadores que perderam
  */
-void give_up(vector<Player*> &v, int &nplayers, int lost){
+void give_up(vector<Player*> &v, int &nplayers, int lost)
+{
 	int gv;
 	if(nplayers > 0 && lost <=1)
 	{
@@ -276,9 +270,7 @@ void give_up(vector<Player*> &v, int &nplayers, int lost){
 
 		if(gv == 1)
 		{
-			choise(a, nplayers);
-			choise(b, nplayers);
-			choise(c, nplayers);
+			choice(v, nplayers);
 		}
 	}
 }
@@ -294,17 +286,17 @@ void give_up(vector<Player*> &v, int &nplayers, int lost){
  * 			nao pausados
  * @param	lost LOST numero de jogadores que perderam
  */
-int overloaded(vector<Player*> &v, int &nplayers, int n, int &lost){
-
+int overloaded(vector<Player*> &v, int &nplayers, int n, int &lost)
+{
 	vector<Player*>::iterator it;
 	for (it = v.begin(); it < v.end(); ++it)
 	{
-		if(it->get_status()!=0 && it->get_score() > n)
+		if((*it)->get_status()!=0 && (*it)->get_score() > n)
 		{
-			it->get_status(3);
+			(*it)->set_status(0);
 			nplayers--;
 			lost++;
-			cout << "\nJogador " << it->get_id() << " ultrapassou o limite da aposta\n\n"
+			cout << "\nJogador " << (*it)->get_id() << " ultrapassou o limite da aposta\n\n";
 		}
 	}     
 	return lost;
@@ -319,14 +311,14 @@ int overloaded(vector<Player*> &v, int &nplayers, int n, int &lost){
  * @param 	cont CONT numero de jogadores que atingiram
  *			o valor da aposta na rodada
  */
-int bingo(vector<Player*> &v, int n, int &cont){
-
+int bingo(vector<Player*> &v, int n, int &cont)
+{
 	vector<Player*>::iterator it;
 	for (it = v.begin(); it < v.end(); ++it)
 	{
-		if(it->get_score() == n)
+		if((*it)->get_score() == n)
 		{
-			it->get_status(3);
+			(*it)->set_status(3);
 			cont++;	
 		}
 	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
@@ -381,7 +373,7 @@ void print_menu(vector<Player*> &vjog)
 
 	do{
 		invalida(menu);
-		if(menu < 1 && menu > 4){limpa_tela(); print_menu(a, b, c);}
+		if(menu < 1 && menu > 4){limpa_tela(); print_menu(vjog);}
 	}while(menu < 1 && menu > 4);
 
 	if(menu==4)

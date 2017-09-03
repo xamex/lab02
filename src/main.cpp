@@ -31,7 +31,7 @@ int main(){
 	int njogadores;
 	do{
 		invalida(njogadores);
-	}while(njogadores > 4 && njogadores < 1);
+	}while(njogadores > 4 || njogadores < 1);
 
 	for (int i = 0; i < njogadores; ++i)
 	{
@@ -54,65 +54,63 @@ int main(){
 		util::limpa_tela();
 		srand(time(NULL));
 		
-		a.dice_rand();
-		b.dice_rand();
-		c.dice_rand();
+		for(vector<Player*>::iterator it = vjogadores.begin(); it < vjogadores.end(); ++it)
+		{
+			(*it)->dice_rand();
+		}
+
 
 		/**
 		* @brief	mostra os dados dos jogadors
 		*/
-		show_dices(a, b, c, nplayers);
+		show_dices(vjogadores, nplayers);
 
 		/**
 		* @brief	mostra o resultado dos jogadors
 		*/
-		scoreboard(a, b, c, nplayers);
+		scoreboard(vjogadores, nplayers);
 
-		if(bingo(a, b, c, n, cont) == 1){
-			winner(a, b, c, n, cont);
+		if(bingo(vjogadores, n, cont) == 1){
+			winner(vjogadores, n, cont);
 			goto inicio;
 		}
 
 		/**
 		* @brief	checa se algum jodador ultrapassou a aposta da rodada
 		*/
-		overloaded(a, b, c, nplayers, n, lost);
+		overloaded(vjogadores, nplayers, n, lost);
 
 		/**
 		* @brief	checa se algum jodador quer parar de jogar na rodada
 		*/
-		give_up(a, b, c, nplayers, lost);
+		give_up(vjogadores, nplayers, lost);
 
 
 		/**
 		* @brief	se dois jogadores perderem ganha oque está ativo
 		*/
-		if(lost == 2){
-			if(a.get_status()==1){
-				a.set_victories(1); 
-				cout << "\nO Vencedor da rodada foi o jogador " << a.get_id() << endl;
+		if(lost == njogadores - 1)
+		{
+			for(vector<Player*>::iterator it = vjogadores.begin(); it < vjogadores.end(); ++it)
+			{
+				if((*it)->get_status()==1)
+				{
+					(*it)->set_victories(1); 
+					cout << "\nO Vencedor da rodada foi o jogador " << (*it)->get_id() << endl;
+				}
 			}
-			if(b.get_status()==1){
-				b.set_victories(1); 
-				cout << "\nO Vencedor da rodada foi o jogador " << b.get_id() << endl;
-			}
-			if(c.get_status()==1){
-				c.set_victories(1); 
-				cout << "\nO Vencedor da rodada foi o jogador " << c.get_id() << endl; 
-			}
-
 			goto fim;
 		}
 	}
 
 	fim:
 
-	if(lost==3){cout << "\nNão houve vencedores nesta rodada\n";}
+	if(lost == njogadores){cout << "\nNão houve vencedores nesta rodada\n";}
 
 	/**
 	* @brief	checa quem ganhou
 	*/	
-	winner(a, b, c, n, cont);
+	winner(vjogadores, n, cont);
 
 	/**
 	* @brief	vai para label inicio

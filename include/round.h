@@ -20,7 +20,7 @@
  * @param	nplayers NPLAYERS numero de jogadores ativos e
  * 			nao pausados
  */
-void scoreboard(Player a, Player b, Player c, int nplayers);
+void scoreboard(vector<Player*> &vjog, int nplayers);
 
 
 /** 
@@ -31,7 +31,7 @@ void scoreboard(Player a, Player b, Player c, int nplayers);
  * @param	nplayers NPLAYERS numero de jogadores ativos e
  * 			nao pausados
  */
-void show_dices(Player a, Player b, Player c, int nplayers);
+void show_dices(vector<Player*> &vjog, int nplayers);
 
 
 /** 
@@ -42,7 +42,7 @@ void show_dices(Player a, Player b, Player c, int nplayers);
  * @param	c C jogador 3
  * @param	n N valor da aposta da rodada
  */
-void check(Player &a, Player &b, Player &c, int n);
+//void check(Player &a, Player &b, Player &c, int n);
 
 
 /** 
@@ -52,7 +52,7 @@ void check(Player &a, Player &b, Player &c, int n);
  * @param	y Y jogador y
  * @param	n N valor da aposta da rodada
  */
-void checkf2(Player &x, Player &y, int n);
+void checkf2(vector<Player*> &vjog, int aposta, int pausados);
 
 
 /** 
@@ -64,7 +64,7 @@ void checkf2(Player &x, Player &y, int n);
  *			ao da aposta da rodada
  * @param	n N valor da aposta da rodada
  */
-void winner(Player &a, Player &b, Player &c, int n, int &cont);
+void winner(vector<Player*> &vjog, int aposta, int &quantv);
 
 
 /** 
@@ -74,7 +74,7 @@ void winner(Player &a, Player &b, Player &c, int n, int &cont);
  * @param	nplayers NPLAYERS numero de jogadores ativos e
  * 			nao pausados
  */
-void choise(Player &x, int &nplayers);
+void choice(vector<Player*> &v, int &nplayers);
 
 
 /** 
@@ -86,8 +86,7 @@ void choise(Player &x, int &nplayers);
  * 			nao pausados
  * @param	lost LOST numero de jogadores que perderam
  */
-void give_up(Player &a, Player &b, Player &c, int &nplayers, int lost);
-
+void give_up(vector<Player*> &v, int &nplayers, int lost);
 
 /** 
  * @brief	Função que desativa jogadores que passaram 
@@ -99,7 +98,7 @@ void give_up(Player &a, Player &b, Player &c, int &nplayers, int lost);
  * 			nao pausados
  * @param	lost LOST numero de jogadores que perderam
  */
-int overloaded(Player &x, Player &y, Player &z, int &nplayers, int n, int &lost);
+int overloaded(vector<Player*> &v, int &nplayers, int n, int &lost);
 
 
 /** 
@@ -112,7 +111,7 @@ int overloaded(Player &x, Player &y, Player &z, int &nplayers, int n, int &lost)
  * @param 	cont CONT numero de jogadores que atingiram
  *			o valor da aposta na rodada
  */
-int bingo(Player &a, Player &b, Player &c, int n, int &cont);
+int bingo(vector<Player*> &v, int n, int &cont);
 
 
 /** 
@@ -122,7 +121,7 @@ int bingo(Player &a, Player &b, Player &c, int n, int &cont);
  * @param	b B jogador 2
  * @param	c C jogador 3
  */
-void print_victories(Player a, Player b, Player c);
+//void print_victories(Player a, Player b, Player c);
 
 
 /** 
@@ -131,6 +130,6 @@ void print_victories(Player a, Player b, Player c);
  * @param	b B jogador 2
  * @param	c C jogador 3
  */
-void print_menu(Player a, Player b, Player c);
+void print_menu(vector<Player*> &vjog);
 
 #endif

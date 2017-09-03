@@ -120,8 +120,6 @@ class Player
 
 	public:
 
-'
-'
 	/** 
 	* @brief	contrutos padrão
 	*/
