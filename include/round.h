@@ -35,18 +35,6 @@ void scoreboard(vector<Player*> &vjog, int nplayers);
  */
 void show_dices(vector<Player*> &vjog, int nplayers);
 
-
-/** 
- * @brief	Função que checa o vencedor ou vencedores no caso
- *			dos 3 jogadores decidirem pausar a rodada
- * @param	a A jogador 1
- * @param	b B jogador 2
- * @param	c C jogador 3
- * @param	n N valor da aposta da rodada
- */
-//void check(Player &a, Player &b, Player &c, int n);
-
-
 /** 
  * @brief	Função que checa o vencedor ou vencedores no caso
  *			de 2 jogadores decidirem pausar a rodada
@@ -54,7 +42,7 @@ void show_dices(vector<Player*> &vjog, int nplayers);
  * @param	y Y jogador y
  * @param	n N valor da aposta da rodada
  */
-void checkf2(vector<Player*> &vjog, int aposta, int pausados);
+void checkf2(vector<Player*> &vjog);
 
 
 /** 
@@ -66,7 +54,7 @@ void checkf2(vector<Player*> &vjog, int aposta, int pausados);
  *			ao da aposta da rodada
  * @param	n N valor da aposta da rodada
  */
-void winner(vector<Player*> &vjog, int aposta, int &quantv);
+void winner(vector<Player*> &vjog, int quantv);
 
 
 /** 
@@ -133,5 +121,7 @@ int bingo(vector<Player*> &v, int n, int &cont);
  * @param	c C jogador 3
  */
 int print_menu(vector<Player*> &vjog);
+
+void inicio_jogo(vector<Player*> &vjog);
 
 #endif

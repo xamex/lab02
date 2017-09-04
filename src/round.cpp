@@ -42,17 +42,17 @@ void scoreboard(vector<Player*> &vjog, int nplayers)
 		{
 			if((*it)->get_status() != 0)
 			{
-				cout << "Jogador " << (*it)->get_id() << ": " << (*it)->get_score();
+				cout << (*it)->get_id() << ": " << (*it)->get_score();
 				if((*it)->get_status()==2){cout <<" (pausado)";}
 				cout << endl;
 
 			}else{
-				(cout << "Jogador " << (*it)->get_id() << ": Eliminado\n");
+				(cout << (*it)->get_id() << ": Eliminado\n");
  			}
 		}
 	}
 
-	cout << "\nAposta da rodada: " << Player::get_n() << endl;
+	cout << "\nAposta da partida: " << Player::get_n() << endl;
 	cout << "\n-----------------------\n";
 	cout << endl;
 }
@@ -74,55 +74,13 @@ void show_dices(vector<Player*> &vjog, int nplayers)
 		{
 			if((*it)->get_status() == 1)
 			{
-				cout << "\nJogador " << (*it)->get_id() << ": ";
+				cout << endl << (*it)->get_id() << ": ";
 				(*it)->get_dice();
 			}
 		}
 		
 	}
 }
-
-
-/** 
- * @brief	Função que checa o vencedor ou vencedores no caso
- *			dos 3 jogadores decidirem pausar a rodada
- * @param	a A jogador 1
- * @param	b B jogador 2
- * @param	c C jogador 3
- * @param	n N valor da aposta da rodada
- */
-/*
-void check(Player &a, Player &b, Player &c, int n){
-
-	if(a.get_score() == b.get_score() && a.get_score() != c.get_score()){
-		cout << "\nEmpate entre jogador " << a.get_id() << " e jogador " << b.get_id() << endl;
-		a.set_status(3);
-		b.set_status(3);
-	}else if(a.get_score() == c.get_score() && a.get_score() != b.get_score()){
-		cout << "\nEmpate entre jogador " << a.get_id() << " e jogador " << c.get_id() << endl;
-		b.set_status(3);
-		c.set_status(3);
-	}else if(c.get_score() == b.get_score() && c.get_score() != a.get_score()){
-		c.set_status(3);
-		b.set_status(3);
-		cout << "\nEmpate entre jogador " << c.get_id() << " e jogador " << b.get_id() << endl;
-	}
-
-	if(a.get_score() == b.get_score() && a.get_score() == c.get_score()){
-		cout << "\nEmpate entre jogador " << a.get_id() << ", jogador " << b.get_id() << " e jogador " << c.get_id() << endl;
-	}else{
-		if(a.get_score()-n > b.get_score()-n){
-			if(a.get_score()-n > c.get_score()-n){
-				a.set_status(3);
-			}else{c.set_status(3);}
-		}else{
-			if(b.get_score()-n > c.get_score()-n){
-				b.set_status(3);
-			}else{c.set_status(3);}
-		}
-	}
-}
-*/
 
 /** 
  * @brief	Função que checa o vencedor ou vencedores no caso
@@ -131,7 +89,7 @@ void check(Player &a, Player &b, Player &c, int n){
  * @param	y Y jogador y
  * @param	n N valor da aposta da rodada
  */
-void checkf2(vector<Player*> &vjog, int aposta, int pausados)
+void checkf2(vector<Player*> &vjog)
 {
 	vector<Player*>::iterator it, wnr;
 	vector<Player*> draw;
@@ -149,11 +107,11 @@ void checkf2(vector<Player*> &vjog, int aposta, int pausados)
 			if((*it)->get_score() > (*wnr)->get_score())
 			{
 				wnr = it;
-				draw.clear(); // limpa vetor de empates  
+				draw.clear(); // limpa vetor de empates
 
 			}else if ((*it)->get_score() == (*wnr)->get_score())
 			{
-				draw.push_back((*wnr));
+				draw.push_back((*it));
 			
 			}
 		}
@@ -166,7 +124,7 @@ void checkf2(vector<Player*> &vjog, int aposta, int pausados)
 		(*wnr)->set_status(3);
 	}
 
-	vjog = draw;
+	winner(draw, 1);
 }
 
 /** 
@@ -176,18 +134,17 @@ void checkf2(vector<Player*> &vjog, int aposta, int pausados)
  *			ao da aposta da rodada
  * @param	aposta APOSTA valor da aposta da rodada
  */
-void winner(vector<Player*> &vjog, int aposta, int &quantv)
+void winner(vector<Player*> &vjog, int quantv)
 {
 	vector<Player*>::iterator it;
 	int pause = 0;
 
 	if(quantv > 0)
 	{
-		vencedores:
 		pause = 0;
 		cout << "\nVencedor(es) da rodada:\n";
 		for (it = vjog.begin(); it < vjog.end(); ++it)
-			if((*it)->get_status() == 3){(*it)->set_victories(1); cout << "jogador " << (*it)->get_id() << endl;}
+			if((*it)->get_status() == 3){(*it)->set_victories(1); cout << (*it)->get_id() << endl;}
 
 		cout << endl;
 
@@ -202,12 +159,7 @@ void winner(vector<Player*> &vjog, int aposta, int &quantv)
 				if((*it)->get_status() == 2){(*it)->set_victories(1); cout << "\nO vencedor da rodada foi o jogador: " << (*it)->get_id() << endl;}	
 		}
 
-		if(pause > 1)
-		{
-			checkf2(vjog, aposta, pause);
-			quantv++;
-			goto vencedores;
-		}
+		if(pause > 1) checkf2(vjog);
 	}
 
 }
@@ -229,7 +181,7 @@ void choice(vector<Player*> &v, int &nplayers)
 	{
 		if(nplayers > 0 && (*it)->get_status()==1)
 		{
-			cout << "Jogador " << (*it)->get_id() << " deseja parar?\n";
+			cout << "Jogador(a) " << (*it)->get_id() << " deseja parar?\n";
 			cout << "1 - Sim\n" << "2 - Não\n\n";
 
 			do{
@@ -238,7 +190,7 @@ void choice(vector<Player*> &v, int &nplayers)
 
 			if(choice == 1)
 			{
-				cout << "\njogador " << (*it)->get_id() << " parou\n\n";
+				cout << endl << (*it)->get_id() << " parou\n\n";
 				nplayers--;
 				(*it)->set_status(2);
 			}
@@ -261,7 +213,7 @@ void give_up(vector<Player*> &v, int &nplayers, int lost)
 	int gv;
 	if(nplayers > 0 && lost <=1)
 	{
-		cout << "Algum jogador deseja parar?\n";
+		cout << "Algum jogador(a) deseja parar?\n";
 		cout << "1 - Sim\n" << "2 - Não\n\n";
 
 		do{
@@ -296,7 +248,7 @@ int overloaded(vector<Player*> &v, int &nplayers, int n, int &lost)
 			(*it)->set_status(0);
 			nplayers--;
 			lost++;
-			cout << "\nJogador " << (*it)->get_id() << " ultrapassou o limite da aposta\n\n";
+			cout << endl << (*it)->get_id() << " ultrapassou o limite da aposta\n\n";
 		}
 	}     
 	return lost;
@@ -338,43 +290,18 @@ int bingo(vector<Player*> &v, int n, int &cont)
  * @param	b B jogador 2
  * @param	c C jogador 3
  */
-/*
 void print_victories(vector<Player*> &vjog){
 	cout << "\n\n----------Quadro de Vitórias----------\n\n";
 	cout << "--------------------------------------\n";
 	cout << "--------------------------------------\n";
-	cout << "-------------JOGADOR 1: " << a.get_victories() << "-------------\n";
-	cout << "-------------JOGADOR 2: " << b.get_victories() << "-------------\n";
-	cout << "-------------JOGADOR 3: " << c.get_victories() << "-------------\n";
+	for(vector<Player*>::iterator it = vjog.begin(); it < vjog.end(); it++)
+		cout << "------------- " << (*it)->get_id() << ": " << (*it)->get_victories() << "-------------\n";
 	cout << "--------------------------------------\n";
 	cout << "--------------------------------------\n";
 	cout << "--------------------------------------\n";
 
 }
-*/
 
-
-void novo_jogo(vector<Player*> &vjog)
-{
-	cout << "Informe o número de jogadores entre 1 e 4: ";
-			int njogadores;
-
-			do{
-				invalida(njogadores);
-			}while(njogadores > 4 || njogadores < 1);
-
-			for (int i = 0; i < njogadores; ++i)
-				vjog.push_back(new Player());
-
-			cout << "\nInforme o nome de cada jogador\n";
-			string nome;
-			cin.ignore();
-			for(vector<Player*>::iterator it = vjog.begin(); it < vjog.end(); ++it)
-			{
-				getline(cin, nome, '\n');
-				(*it)->set_id(nome);
-			}
-}
 /** 
  * @brief	Função que imprime o menu
  * @param	a A jogador 1
@@ -385,7 +312,7 @@ int print_menu(vector<Player*> &vjog)
 {
 	inicio:
 	cout << "\n\n----------------Menu----------------\n\n";
-	cout << "1 - Novo Jogo\n";
+	cout << "1 - Novo Partida\n";
 	cout << "2 - Regras do Jogo\n";
 	cout << "3 - Placar de Vitórias\n";
 	cout << "4 - Sair\n";
@@ -400,8 +327,6 @@ int print_menu(vector<Player*> &vjog)
 
 	switch(menu){
 		case 1:
-			limpa_tela();
-			novo_jogo(vjog);
 	 		limpa_tela();
 	 		break;
 
@@ -421,7 +346,7 @@ int print_menu(vector<Player*> &vjog)
 
 		case 3:
 			limpa_tela();
-			//print_victories(vjog);
+			print_victories(vjog);
 			goto inicio;
 			break;
 
@@ -437,4 +362,28 @@ int print_menu(vector<Player*> &vjog)
 	}
 
 	return menu;
+}
+
+void inicio_jogo(vector<Player*> &vjog)
+{
+	cout << "\n******************Do you have dice at home?******************\n";
+	cout << "\nInforme o número de jogadores de 1 a 4: ";
+	int njogadores;
+
+	do{
+		invalida(njogadores);
+	}while(njogadores > 4 || njogadores < 1);
+	for (int i = 0; i < njogadores; ++i)
+		vjog.push_back(new Player());
+
+	cout << "\nInforme o nome de cada jogador\n";
+	string nome;
+	cin.ignore();
+	for(vector<Player*>::iterator it = vjog.begin(); it < vjog.end(); ++it)
+	{
+		getline(cin, nome, '\n');
+		(*it)->set_id(nome);
+	}
+
+	limpa_tela();
 }

@@ -25,7 +25,7 @@ int Player::n = 0;
 int main(){
 
 	int lost;
-	int cont;
+	int contv;
 	int nplayers;
 	int pare;
 	
@@ -33,9 +33,17 @@ int main(){
 
 	limpa_tela();
 
+	inicio_jogo(vjogadores);
+
 	while(print_menu(vjogadores) != 4)
 	{
 		
+		for(vector<Player*>::iterator it = vjogadores.begin(); it < vjogadores.end(); ++it)
+		{
+			(*it)->set_status(1);
+			(*it)->set_score(0);
+		}
+
 		cout << "Informe o valor da aposta para essa partida: ";
 		int n;
 		invalida(n);
@@ -43,7 +51,7 @@ int main(){
 
 		nplayers = (int)vjogadores.size();
 		lost = 0;
-		cont = 0;
+		contv = 0;
 		pare = 0;
 		while(nplayers >= 1 && pare == 0){
 			util::limpa_tela();
@@ -65,7 +73,7 @@ int main(){
 			/**
 			* @brief	checa se algum jogador atingiu o valor da aposta
 			*/
-			if(bingo(vjogadores, n, cont) == 1)
+			if(bingo(vjogadores, n, contv) == 1)
 			{
 				pare = 1;
 
@@ -82,15 +90,16 @@ int main(){
 
 				
 				/**
-				* @brief	se todos - 1 jogadores perderem ganha o que está ativo
+				* @brief	se todos - 1 jogadores perderem ganha o que não perdeu
 				*/
 				if(lost == (int)vjogadores.size() - 1)
-				{	pare = 1;
+				{
+					pare = 1;
+					contv++;
 					for(vector<Player*>::iterator it = vjogadores.begin(); it < vjogadores.end(); ++it)
 					{
-						if((*it)->get_status() == 1)
-						{
-							(*it)->set_victories(1);
+						if((*it)->get_status() != 0)
+						{	
 							(*it)->set_status(3); 
 						}
 					}
@@ -103,7 +112,7 @@ int main(){
 		/**
 		* @brief	checa quem ganhou
 		*/	
-		winner(vjogadores, n, cont);
+		winner(vjogadores, contv);
 	}
 
 	return 0;

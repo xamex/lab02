@@ -54,7 +54,7 @@ void Player::dice_rand(){
  * @param	c C placar
  */
 void Player::set_score(int c){
-	score = 0;
+	score = c;
 }
 
 
