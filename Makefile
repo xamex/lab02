@@ -1,6 +1,6 @@
 PROG = ./bin/player
 
-INC_DIR = ./include 
+INC_DIR2 = ./include/questao2 
 SRC_DIR = ./src
 OBJ_DIR = ./build
 BIN_DIR = ./bin
@@ -10,23 +10,23 @@ CC = g++
 
 RM = rm -rf 
 
-OBJS = ./build/main.o ./build/player.o ./build/round.o ./build/util.o
+OBJS = ./build/questao2/main.o ./build/questao2/player.o ./build/questao2/round.o ./build/questao2/util.o
 
-CPPFLAGS = -Wall -pedantic -ansi -std=c++11 -I. -I$(INC_DIR)
+CPPFLAGS = -Wall -pedantic -ansi -std=c++11 -I. -I$(INC_DIR2)
 
 $(PROG): $(OBJ_DIR) $(OBJS)
 	$(CC) $(OBJS) $(CPPFLAGS) -o $@
 
-$(OBJ_DIR)/main.o: $(SRC_DIR)/main.cpp
+$(OBJ_DIR)/questao2/main.o: $(SRC_DIR)/questao2/main.cpp
 	$(CC) -c $(CPPFLAGS) $^ -o $@
 
-$(OBJ_DIR)/player.o: $(SRC_DIR)/player.cpp 
+$(OBJ_DIR)/questao2/player.o: $(SRC_DIR)/questao2/player.cpp 
 	$(CC) -c $(CPPFLAGS) $^ -o $@
 
-$(OBJ_DIR)/round.o: $(SRC_DIR)/round.cpp 
+$(OBJ_DIR)/questao2/round.o: $(SRC_DIR)/questao2/round.cpp 
 	$(CC) -c $(CPPFLAGS) $^ -o $@
 
-$(OBJ_DIR)/util.o: $(SRC_DIR)/util.cpp 
+$(OBJ_DIR)/questao2/util.o: $(SRC_DIR)/questao2/util.cpp 
 	$(CC) -c $(CPPFLAGS) $^ -o $@
 
 $(OBJ_DIR):
@@ -38,7 +38,7 @@ doxy:
 
 clean: 
 	$(RM) $(BIN_DIR)/*
-	$(RM) $(OBJ_DIR)/*	
+	$(RM) $(OBJ_DIR)/questao2/*	
 	$(RM) $(DOC_DIR)/*	
 
 go:

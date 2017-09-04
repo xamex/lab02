@@ -3,7 +3,7 @@
 * @brief 	Programa que simula um jogo de dados com 3 jogadores
 * @author	Gabriel Barbosa (gbsbarbosa.gb@gmail.com)
 * @since	05/05/2017
-* @date		07/05/2017
+* @date		04/09/2017
 */
 
 #include <iostream>
@@ -19,14 +19,14 @@ using std::vector;
 using namespace util;
 
 
-int Player::n = 0;
+int Player::aposta = 0;
 
 
 int main(){
 
-	int lost;
-	int contv;
-	int nplayers;
+	int lost; //jogadores que perderam
+	int contv; //jogadores que ganharam
+	int nplayers; //numero de jogadores ativos
 	int pare;
 	
 	vector<Player*> vjogadores;
@@ -47,33 +47,34 @@ int main(){
 		cout << "Informe o valor da aposta para essa partida: ";
 		int n;
 		invalida(n);
-		Player::set_n(n);
+		Player::set_aposta(n);
 
 		nplayers = (int)vjogadores.size();
-		lost = 0;
+		lost = 0; 
 		contv = 0;
 		pare = 0;
+
 		while(nplayers >= 1 && pare == 0){
 			util::limpa_tela();
 			srand(time(NULL));
 			
 			for(vector<Player*>::iterator it = vjogadores.begin(); it < vjogadores.end(); ++it)
-				(*it)->dice_rand();
+				(*it)->dice_rand(); //joga os dados de cada jogador
 
 			/**
-			* @brief	mostra os dados dos jogadors
+			* @brief	mostra os dados dos jogadores
 			*/
 			show_dices(vjogadores, nplayers);
 
 			/**
-			* @brief	mostra o resultado dos jogadors
+			* @brief	mostra o resultado dos jogadores
 			*/
 			scoreboard(vjogadores, nplayers);
 
 			/**
 			* @brief	checa se algum jogador atingiu o valor da aposta
 			*/
-			if(bingo(vjogadores, n, contv) == 1)
+			if(bingo(vjogadores, contv) == 1)
 			{
 				pare = 1;
 
@@ -81,7 +82,7 @@ int main(){
 				/**
 				* @brief	checa se algum jodador ultrapassou a aposta da rodada
 				*/
-				overloaded(vjogadores, nplayers, n, lost);
+				overloaded(vjogadores, nplayers, lost);
 
 				/**
 				* @brief	checa se algum jodador quer parar de jogar na rodada

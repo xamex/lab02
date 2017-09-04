@@ -1,12 +1,10 @@
 /**
-* @file	 	roud.cpp
+* @file	 	round.cpp
 * @brief	Arquivo de corpo contendo a implementação das funções que
 *			controlam as ações de uma rodada
 * @author	Gabriel Barbosa (gbsbarbosa.gb@gmail.com)
 * @since	05/05/2017
-* @date		07/05/2017
-* @sa		player.h
-* @sa		round.h
+* @date		04/09/2017
 */
 
 #include <iostream>
@@ -23,15 +21,13 @@ using std::vector;
 #include "util.h"
 using namespace util;
 
+
 /** 
  * @brief	Função que imprime o placar do jogadores
- * @param	a A jogador 1
- * @param	b B jogador 2
- * @param	c C jogador 3
+ * @param	vjog VJOG vetor de jogadores
  * @param	nplayers NPLAYERS numero de jogadores ativos e
  * 			nao pausados
  */
-
 void scoreboard(vector<Player*> &vjog, int nplayers)
 {
 	if(nplayers > 0)
@@ -52,7 +48,7 @@ void scoreboard(vector<Player*> &vjog, int nplayers)
 		}
 	}
 
-	cout << "\nAposta da partida: " << Player::get_n() << endl;
+	cout << "\nAposta da partida: " << Player::get_aposta() << endl;
 	cout << "\n-----------------------\n";
 	cout << endl;
 }
@@ -60,9 +56,7 @@ void scoreboard(vector<Player*> &vjog, int nplayers)
 
 /** 
  * @brief	Função que imprime os dados dos jogadores
- * @param	a A jogador 1
- * @param	b B jogador 2
- * @param	c C jogador 3
+ * @param	vjog VJOG vetor de jogadores
  * @param	nplayers NPLAYERS numero de jogadores ativos e
  * 			nao pausados
  */
@@ -82,14 +76,13 @@ void show_dices(vector<Player*> &vjog, int nplayers)
 	}
 }
 
+
 /** 
  * @brief	Função que checa o vencedor ou vencedores no caso
- *			de 2 jogadores decidirem pausar a rodada
- * @param	x X jogador x
- * @param	y Y jogador y
- * @param	n N valor da aposta da rodada
+ *			de mais de 1 jogadores decidir pausar a rodada
+ * @param	vjog VJOG vetor de jogadores
  */
-void checkf2(vector<Player*> &vjog)
+void check(vector<Player*> &vjog)
 {
 	vector<Player*>::iterator it, wnr;
 	vector<Player*> draw;
@@ -129,10 +122,8 @@ void checkf2(vector<Player*> &vjog)
 
 /** 
  * @brief	Função que faz o tratamendo do vencedor(es) da rodada
-
- * @param   quantv Cont numero de jogadores que obteram resultado igual
- *			ao da aposta da rodada
- * @param	aposta APOSTA valor da aposta da rodada
+ * @param	vjog VJOG vetor de jogadores
+ * @param   quantv QUANT numero de jogadores que estão com status de vitória
  */
 void winner(vector<Player*> &vjog, int quantv)
 {
@@ -159,7 +150,7 @@ void winner(vector<Player*> &vjog, int quantv)
 				if((*it)->get_status() == 2){(*it)->set_victories(1); cout << "\nO vencedor da rodada foi o jogador: " << (*it)->get_id() << endl;}	
 		}
 
-		if(pause > 1) checkf2(vjog);
+		if(pause > 1) check(vjog);
 	}
 
 }
@@ -168,16 +159,16 @@ void winner(vector<Player*> &vjog, int quantv)
 /** 
  * @brief	Função que checa se um jogador especifico quer
  *			parar de jogar na rodada
- * @param	x X jogador x
+ * @param	vjog VJOG vetor de jogadores
  * @param	nplayers NPLAYERS numero de jogadores ativos e
  * 			nao pausados
  */
-void choice(vector<Player*> &v, int &nplayers)
+void choice(vector<Player*> &vjog, int &nplayers)
 {
 	int choice;
 
 	vector<Player*>::iterator it;
-	for (it = v.begin(); it < v.end(); ++it)
+	for (it = vjog.begin(); it < vjog.end(); ++it)
 	{
 		if(nplayers > 0 && (*it)->get_status()==1)
 		{
@@ -201,14 +192,12 @@ void choice(vector<Player*> &v, int &nplayers)
 
 /** 
  * @brief	Função que se algum jogador quer parar de jogar na rodada atual
- * @param	a A jogador 1
- * @param	b B jogador 2
- * @param	c C jogador 3
+ * @param	vjog VJOG vetor de jogadores
  * @param   nplayers NPLAYERS numero de jogadores ativos e
  * 			nao pausados
  * @param	lost LOST numero de jogadores que perderam
  */
-void give_up(vector<Player*> &v, int &nplayers, int lost)
+void give_up(vector<Player*> &vjog, int &nplayers, int lost)
 {
 	int gv;
 	if(nplayers > 0 && lost <=1)
@@ -222,7 +211,7 @@ void give_up(vector<Player*> &v, int &nplayers, int lost)
 
 		if(gv == 1)
 		{
-			choice(v, nplayers);
+			choice(vjog, nplayers);
 		}
 	}
 }
@@ -231,19 +220,18 @@ void give_up(vector<Player*> &v, int &nplayers, int lost)
 /** 
  * @brief	Função que desativa jogadores que passaram 
  *			do valor da aposta
- * @param	x X jogador 1
- * @param	y Y jogador 2
- * @param	z Z jogador 3
+ * @param	vjog VJOG vetor de jogadores
  * @param   nplayers NPLAYERS numero de jogadores ativos e
  * 			nao pausados
  * @param	lost LOST numero de jogadores que perderam
+ * @return 	numero de jogadores que perderam
  */
-int overloaded(vector<Player*> &v, int &nplayers, int n, int &lost)
+int overloaded(vector<Player*> &vjog, int &nplayers, int &lost)
 {
 	vector<Player*>::iterator it;
-	for (it = v.begin(); it < v.end(); ++it)
+	for (it = vjog.begin(); it < vjog.end(); ++it)
 	{
-		if((*it)->get_status()!=0 && (*it)->get_score() > n)
+		if((*it)->get_status()!=0 && (*it)->get_score() > Player::aposta)
 		{
 			(*it)->set_status(0);
 			nplayers--;
@@ -259,16 +247,17 @@ int overloaded(vector<Player*> &v, int &nplayers, int n, int &lost)
 /** 
  * @brief	Função que checa se algum jogador atingiu
  *			o valor da aposta
+ * @param	vjog VJOG vetor de jogadores
  * @param   n N valor da aposta da rodada
  * @param 	cont CONT numero de jogadores que atingiram
  *			o valor da aposta na rodada
  */
-int bingo(vector<Player*> &v, int n, int &cont)
+int bingo(vector<Player*> &vjog, int &cont)
 {
 	vector<Player*>::iterator it;
-	for (it = v.begin(); it < v.end(); ++it)
+	for (it = vjog.begin(); it < vjog.end(); ++it)
 	{
-		if((*it)->get_score() == n)
+		if((*it)->get_score() == Player::aposta)
 		{
 			(*it)->set_status(3);
 			cont++;	
@@ -286,9 +275,7 @@ int bingo(vector<Player*> &v, int n, int &cont)
 /** 
  * @brief	Função que imprime a quantidade de vitorias
  * 			de cada jogador
- * @param	a A jogador 1
- * @param	b B jogador 2
- * @param	c C jogador 3
+ * @param	vjog VJOG vetor de jogadores
  */
 void print_victories(vector<Player*> &vjog){
 	cout << "\n\n----------Quadro de Vitórias----------\n\n";
@@ -304,9 +291,8 @@ void print_victories(vector<Player*> &vjog){
 
 /** 
  * @brief	Função que imprime o menu
- * @param	a A jogador 1
- * @param	b B jogador 2
- * @param	c C jogador 3
+ * @param	vjog VJOG vetor de jogadores
+ * @return 	opção escolhida pelo usuário
  */
 int print_menu(vector<Player*> &vjog)
 {
@@ -364,15 +350,20 @@ int print_menu(vector<Player*> &vjog)
 	return menu;
 }
 
+/** 
+ * @brief	Tela inicial do jogo onde são escolhido o numero de jogadores
+ *			e informado o nome de cada um.
+ * @param	vjog VJOG vetor de jogadores
+ */
 void inicio_jogo(vector<Player*> &vjog)
 {
 	cout << "\n******************Do you have dice at home?******************\n";
-	cout << "\nInforme o número de jogadores de 1 a 4: ";
+	cout << "\nInforme o número de jogadores de 2 a 7: "; //foi escolhido o limite de 7 jogadores por questões do visual das impressões no terminal
 	int njogadores;
 
 	do{
 		invalida(njogadores);
-	}while(njogadores > 4 || njogadores < 1);
+	}while(njogadores > 7 || njogadores < 2);
 	for (int i = 0; i < njogadores; ++i)
 		vjog.push_back(new Player());
 
