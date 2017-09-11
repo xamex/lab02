@@ -325,8 +325,8 @@ int print_menu(vector<Player*> &vjog)
 
 			cout << "OBJETIVO:\n" << "O objetivo é ficar o mais próximo e abaixo do valor N\n" "a ser estabelecido no início de cada rodada.";
 			cout << " Ao obter\num valor agregado superior a N, o jogador é considerado\nexcluído da rodada.\n\nA cada vez de jogar, o jogador pode optar por jogar os\ndados ou parar (e não jogar mais até a rodada acabar).\n\n";
-			cout << "Uma rodada é finalizada quando:\n\n(1) resta\napenas um jogador, uma vez que os outros foram excluídos\n\n(2) quando não há mais jogadores a jogar, ou seja,\ntodos os jogadores “ativos” decidiram parar\n\n";
-			cout << "(3) quando um dos jogadores atinge exatamente o valor N.\n\nVence a rodada:\nO jogador que permanecer na rodada (ou seja, não for excluído)\ne obtiver o número de pontos agregados mais próximo de N\n\n";
+			cout << "Uma rodada é finalizada quando:\n\n(1) Quando resta apenas um jogador, uma vez que os outros foram excluídos\n\n(2) Quando não há mais jogadores a jogar, ou seja,\ntodos os jogadores “ativos” decidiram parar\n\n";
+			cout << "(3) Quando um dos jogadores atinge exatamente o valor N.\n\nVence a rodada:\nO jogador que permanecer na rodada (ou seja, não for excluído)\ne obtiver o número de pontos agregados mais próximo de N\n\n";
 			print_menu(vjog);
 			break;
 
